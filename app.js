@@ -1,9 +1,10 @@
-const express       = require('express')
-const dotenv        = require("dotenv")
-const connect       = require('./config/db')
-const cookieParser  = require('cookie-parser')
-const cors           = require('cors')
-const app           = express()
+const express           = require('express')
+const dotenv            = require("dotenv")
+const connect           = require('./config/db')
+const cookieParser      = require('cookie-parser')
+const cors              = require('cors')
+const authRoutes        = require('./routes/auth')
+const app               = express()
 dotenv.config({path:"./config/config.env"})
 
 //* DB Connect 
@@ -15,10 +16,9 @@ app.use(cookieParser());
 app.use(cors());
 
 //* Routes 
-app.get('/',(req,res)=>{
-    res.send("hello")
-})
+app.use('/api',authRoutes)
 
+//* server start
 app.listen(process.env.PORT,()=>{
     console.log("listening at port 5000")
 })
