@@ -1,2 +1,12 @@
 
 GET http://localhost:5000/api/signout
+
+###
+
+POST http://localhost:5000/api/signup
+
+Content-Type: application/json
+
+{
+    "lol":12
+}

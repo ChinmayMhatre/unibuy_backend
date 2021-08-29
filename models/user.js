@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 const userSchema = new Schema({
     firstname:{
         type:String,
-        required:true,
+        required:[true,"Please enter a first name"],
         trim:true,
         maxLength:32
     },
@@ -18,7 +18,7 @@ const userSchema = new Schema({
     },
     email:{
         type:String,
-        require:true,
+        require:[true,"Please enter an email"],
         unique:true,
         trim:true
     },
@@ -29,7 +29,7 @@ const userSchema = new Schema({
     // TODO: password hashing remaining
     encrypt_password:{
         type:String,
-        require:true
+        require:[true,"Please enter a password"]
     },
     salt:String,
     role:{
@@ -52,7 +52,7 @@ userSchema.virtual("password")
         return this._password
     })
 
-userSchema.method = {
+userSchema.methods = {
     authenticate: function(plainPassword){
         return this.securePassword(plainPassword) === this.encrypt_password
     },
