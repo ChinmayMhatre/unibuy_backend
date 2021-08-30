@@ -1,7 +1,7 @@
 const express                       = require('express')
 const router                        = express.Router()
 const { signout,signup }            = require('../controllers/auth')
-const { check, validationResult }    = require('express-validator');
+const { check }    = require('express-validator');
 
 
 router
@@ -12,9 +12,7 @@ router
     .use([
         check("firstname","Please enter a name of atleast 2 characters")
             .isLength({ min: 2 }),
-        check("lastname","Please enter a last name of atleast 2 characters")
-            .isLength({ min: 2 }),
-        check("email","Please enter a email")
+        check("email","Please enter a valid email")
             .isEmail(),
             // Todo: add more validations to the password
         check("password","Please enter a password greater than 6 characters")
