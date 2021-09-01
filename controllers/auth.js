@@ -3,7 +3,6 @@ const {validationResult } = require('express-validator');
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 
-
 exports.signup = async (req,res)=>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -76,9 +75,15 @@ exports.signin = (req,res)=>{
 
 
 exports.signout = (req,res)=>{
+    res.clearCookie("token")
     res.json({
-        message:"user signout"
+        success:true,
+        message:"user signout success"
     })
 }
 
+exports.isSignedIn = expressJwt({
+    secret : process.env.SECRET,
+    userProperty:"auth"
+})
 
