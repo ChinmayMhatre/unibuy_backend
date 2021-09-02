@@ -73,7 +73,6 @@ exports.signin = (req,res)=>{
     
 }
 
-
 exports.signout = (req,res)=>{
     res.clearCookie("token")
     res.json({
@@ -82,8 +81,31 @@ exports.signout = (req,res)=>{
     })
 }
 
+
 exports.isSignedIn = expressJwt({
     secret : process.env.SECRET,
-    userProperty:"auth"
+    requestProperty:"auth"
 })
 
+//* middleware
+
+exports.isAuthenticated = (req,res,next)=>{
+    let checker = req.profile && req.auth && req.auth._id === req.profile._id
+    if(!checker){
+        return res.status(403).json({
+            success:false,
+            error:"ACCESS DENIED"
+        })
+    }
+    next();
+}
+
+exports.isAdmin = (req,res,next)=>{
+    if(req.profile.role === 0){
+        return res.status(403).json({
+            success:false,
+            error:"ACCESS DENIED"
+        })
+    }
+    next();
+}
