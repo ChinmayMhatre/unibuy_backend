@@ -1,4 +1,5 @@
 const User = require("../models/user")
+const Order = require("../models/order")
 
 exports.getUserById = async (req,res,next,id)=>{
     try {
@@ -62,7 +63,23 @@ exports.updateUser = async (req,res)=>{
     } catch (error) {
         return res.status(400).json({
             success:false,
-            error:error
+            error:"something went wrong"
         })
     }
+}
+
+exports.userPurchaseList = async (req,res)=>{
+    try {
+        let order = await Order.find({user:req.profile._id}).populate("user","_id name")
+        res.status(200).json({
+            sucess:true,
+            data:order
+        })
+    } catch (error) {
+        return res.status(400).json({
+            success:false,
+            error:"something went wrong"
+        })
+    }
+    
 }
