@@ -21,9 +21,13 @@ exports.getUserById = async (req,res,next,id)=>{
 }
 
 exports.getUser = async (req,res)=>{
+    req.profile.salt = undefined;
+    req.profile.encrypt_password = undefined;
+    req.profile.createdAt = undefined;
+    req.profile.updatedAt = undefined;
+
     return res.json({
         success:true,
-        //  todo: come back for password
-        data : res.profile
+        data : req.profile
     })
 }

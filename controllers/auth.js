@@ -84,13 +84,14 @@ exports.signout = (req,res)=>{
 
 exports.isSignedIn = expressJwt({
     secret : process.env.SECRET,
+    algorithms:["HS256"],
     requestProperty:"auth"
 })
 
 //* middleware
 
 exports.isAuthenticated = (req,res,next)=>{
-    let checker = req.profile && req.auth && req.auth._id === req.profile._id
+    let checker = req.profile && req.auth && req.auth._id == req.profile._id
     if(!checker){
         return res.status(403).json({
             success:false,
