@@ -1,5 +1,5 @@
 const User = require("../models/user")
-const Order = require("../models/order")
+const {Order} = require("../models/order")
 
 exports.getUserById = async (req,res,next,id)=>{
     try {
@@ -75,6 +75,36 @@ exports.userPurchaseList = async (req,res)=>{
             sucess:true,
             data:order
         })
+    } catch (error) {
+        return res.status(400).json({
+            success:false,
+            error:"something went wrong"
+        })
+    }
+    
+}
+
+exports.pushOrderInPurchaseList = async (req,res,next)=>{
+    let purchases = []
+    req.body.order.products.forEach(product => {
+        purchases.push({
+            _id:product._id,
+            name:product.name,
+            description:product.description,
+            category:product.category,
+            stock:product.stock,
+            amount:req.body.order.amount,
+            transaction_id:req.body.order.transaction_id
+        })
+    });
+    //* store to db
+    try {
+        const purchaseitems = User.findOneAndUpdate({_id:req.profile._id},{$push:{purchases}},{new:true})
+        // return res.status(200).json({
+        //     success:true,
+        //     data:purchaseitems
+        // })
+        next()
     } catch (error) {
         return res.status(400).json({
             success:false,
