@@ -7,6 +7,7 @@ const cors              = require('cors')
 
 const authRoutes        = require('./routes/auth')
 const userRoutes        = require('./routes/user')
+const categoryRoutes        = require('./routes/category')
 
 const app               = express()
 
@@ -22,6 +23,7 @@ app.use(cors());
 //* Routes 
 app.use('/api',authRoutes)
 app.use('/api/user',userRoutes)
+app.use('/api/user',categoryRoutes)
 
 //* server start
 app.listen(process.env.PORT,()=>{
