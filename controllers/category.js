@@ -6,7 +6,7 @@ exports.getCategoryById = async (req,res,next,id)=>{
         req.category = category
         next()
     } catch (error) {
-        res.status("400").json({
+        return res.status("400").json({
             success:false,
             error:"Not Found"
         })
@@ -21,7 +21,7 @@ exports.createCategory = async (req,res) =>{
             data:category
         })
     } catch (error) {
-        res.status("400").json({
+        return res.status("400").json({
             success:false,
             error:"Unable to add category"
         })
@@ -29,11 +29,12 @@ exports.createCategory = async (req,res) =>{
 }
 
 exports.getCategory = async (req,res)=>{
-    res.status(200).json({
+    return res.status(200).json({
         success:true,
         data : req.category
     })
 }
+
 exports.getAllCategories = async (req,res)=>{
     try {
         let categories = await Category.find()
@@ -42,14 +43,14 @@ exports.getAllCategories = async (req,res)=>{
             data:categories
         })
     } catch (error) {
-        res.status("400").json({
+        return res.status("400").json({
             success:false,
             error:"Unable to get all categories"
         })
     }
 }
 
-exports.updateCategory = async (req,res) =>{
+exports.updateCategory = async (req,res)=>{
     try {
         let category = await Category.findByIdAndUpdate({_id:req.category._id},
                                         {$set : {name:req.body.name}},
@@ -59,9 +60,26 @@ exports.updateCategory = async (req,res) =>{
             data:category
         })
     } catch (error) {
-        res.status("400").json({
+        return res.status("400").json({
             success:false,
             error:"Unable to update category"
         })
     }
+}
+
+exports.removeCategory = async (req,res)=>{
+    try {
+        let category = req.category;
+        let removedCategory = await category.remove()
+        return res.status(201).json({
+            success:true,
+            data:`${removedCategory.name} sucessfully deleted`
+        })
+    } catch (error) {
+        return res.status("400").json({
+            success:false,
+            error:`Unable to delete ${category.name}`
+        })
+    }
+    
 }
