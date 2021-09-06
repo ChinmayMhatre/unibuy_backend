@@ -52,9 +52,7 @@ exports.getAllCategories = async (req,res)=>{
 
 exports.updateCategory = async (req,res)=>{
     try {
-        let category = await Category.findByIdAndUpdate({_id:req.category._id},
-                                        {$set : {name:req.body.name}},
-                                        {new:true,useFindAndModify:false})
+        let category = await Category.findByIdAndUpdate({_id:req.category._id},{$set : {name:req.body.name}},{new:true,useFindAndModify:false})
         return res.status(201).json({
             success:true,
             data:category
