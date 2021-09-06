@@ -15,13 +15,14 @@ router.param("categoryId",getCategoryById)
 router.post("/create/:userId",[isSignedIn,isAuthenticated,isAdmin],createCategory);
 
 // read
-router.get("/:categoryId",getCategory)
 router.get("/all",getAllCategories)
+router.get("/:categoryId",getCategory)
+
 
 //  update
 router.put("/update/:categoryId/:userId",[isSignedIn,isAuthenticated,isAdmin],updateCategory)
 
 // delete
-router.delete("/update/:categoryId/:userId",[isSignedIn,isAuthenticated,isAdmin],removeCategory)
+router.delete("/delete/:categoryId/:userId",[isSignedIn,isAuthenticated,isAdmin],removeCategory)
 
 module.exports = router

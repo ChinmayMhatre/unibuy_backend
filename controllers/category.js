@@ -2,7 +2,7 @@ const Category = require("../models/category")
 
 exports.getCategoryById = async (req,res,next,id)=>{
     try {
-        let category = Category.findById(id)
+        let category = await Category.findById(id).exec()
         req.category = category
         next()
     } catch (error) {
@@ -51,11 +51,15 @@ exports.getAllCategories = async (req,res)=>{
 }
 
 exports.updateCategory = async (req,res)=>{
+    let category = req.category
+    category.name = req.body.name
     try {
-        let category = await Category.findByIdAndUpdate({_id:req.category._id},{$set : {name:req.body.name}},{new:true,useFindAndModify:false})
+        //? alternative
+        //? let updatedcategory = await Category.findByIdAndUpdate({_id:req.category._id},{$set : {name:req.body.name}},{new:true,useFindAndModify:false})
+        let updatedcategory = await category.save()
         return res.status(201).json({
             success:true,
-            data:category
+            data:updatedcategory
         })
     } catch (error) {
         return res.status("400").json({
@@ -67,16 +71,19 @@ exports.updateCategory = async (req,res)=>{
 
 exports.removeCategory = async (req,res)=>{
     try {
-        let category = req.category;
+        let category = req.category
+        // ? optional method
+        // ?let removedCategory = await Category.findByIdAndDelete({_id:req.category._id})
         let removedCategory = await category.remove()
         return res.status(201).json({
             success:true,
             data:`${removedCategory.name} sucessfully deleted`
         })
     } catch (error) {
+        console.log(error)
         return res.status("400").json({
             success:false,
-            error:`Unable to delete ${category.name}`
+            error:`Unable to delete `
         })
     }
     
