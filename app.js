@@ -23,7 +23,7 @@ app.use(cors());
 //* Routes 
 app.use('/api',authRoutes)
 app.use('/api/user',userRoutes)
-app.use('/api',categoryRoutes)
+app.use('/api/category',categoryRoutes)
 
 //* server start
 app.listen(process.env.PORT,()=>{
