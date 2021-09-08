@@ -5,9 +5,10 @@ const connect           = require('./config/db')
 const cookieParser      = require('cookie-parser')
 const cors              = require('cors')
 
-const authRoutes        = require('./routes/auth')
-const userRoutes        = require('./routes/user')
+const authRoutes            = require('./routes/auth')
+const userRoutes            = require('./routes/user')
 const categoryRoutes        = require('./routes/category')
+const productRoutes        = require('./routes/product')
 
 const app               = express()
 
@@ -24,6 +25,7 @@ app.use(cors());
 app.use('/api',authRoutes)
 app.use('/api/user',userRoutes)
 app.use('/api/category',categoryRoutes)
+app.use('/api/product',productRoutes)
 
 //* server start
 app.listen(process.env.PORT,()=>{

@@ -33,9 +33,9 @@ const productSchema = new Schema({
         default:0
     },
     photo:{
-        data:buffer,
+        data:Buffer,
         contentType:String
     }
 },{timestamps:true})
 
-mondule.exports = mongoose.model('Product',productSchema)
+module.exports = mongoose.model('Product',productSchema)
