@@ -26,7 +26,22 @@ exports.createProduct = async (req,res)=>{
                 error:"something went wrong"
             })
         }
-        // todo restriction on field
+
+        const {name,description,price,category,stock} = fields
+
+        if(
+            !name ||
+            !description ||
+            !price ||
+            !category ||
+            !stock
+        ){
+            return res.status(400).json({
+                success:false,
+                error:"Please include all fields"
+            })
+        }
+
         let product = new Product(fields)
         if(file.photo){
             if(file.photo.size > 1024*1024*3){
@@ -48,7 +63,7 @@ exports.createProduct = async (req,res)=>{
         } catch (error) {
             return res.status(400).json({
                 success:false,
-                error:"add product to db failed"
+                error:error
             })
         }
     })
