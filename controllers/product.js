@@ -141,6 +141,27 @@ exports.updateProduct = async (req,res)=>{
     })
 }
 
+exports.getAllProducts = async (req,res)=>{
+    let limit = req.query.limit ? parseInt(req.query.limit) : 8
+    let sortBy = req.query.sortby ? req.query.sortby : "_id"
+    try {
+        let products = Product.find()
+        .populate("category")
+        .select("-photo")
+        .sort([[sortBy,"asc"]])
+        .limit(limit)
+        return res.status("200").json({
+            success:true,
+            data:products
+        })
+    } catch (error) {
+        return res.status(400).json({
+                success:false,
+                error:"something went wrong"
+            })
+    }
+}
+
 //* middleware
 exports.loadphoto = async (req,res,next)=>{
     if(req.product.photo.data){
