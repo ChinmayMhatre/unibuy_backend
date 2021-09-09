@@ -68,3 +68,24 @@ exports.createProduct = async (req,res)=>{
         }
     })
 }
+
+exports.getProduct = async (req,res)=>{
+    try {
+        req.product.photo = undefined
+        return res.status("200").json({
+            success:true,
+            data:req.product
+        })
+    } catch (error) {
+        
+    }
+}
+
+//* middleware
+exports.loadphoto = async (req,res,next)=>{
+    if(req.product.photo.data){
+        res.set("Content-Type",req.product.photo.contentType)
+        return res.send(req.product.photo.data)
+    }
+    next()
+}
