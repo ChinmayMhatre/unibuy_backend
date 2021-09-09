@@ -15,8 +15,8 @@ const {getUserById}                                                             
     router.get("/photo/:productId",loadphoto)
 
     //* delete route
-    router.delete("/product/:productId/:userId",[isSignedIn,isAuthenticated,isAdmin],deleteProduct)
+    router.delete("/delete/:productId/:userId",[isSignedIn,isAuthenticated,isAdmin],deleteProduct)
     //* update route 
-    router.put("/product/:productId/:userId",[isSignedIn,isAuthenticated,isAdmin],updateProduct)
+    router.put("/update/:productId/:userId",[isSignedIn,isAuthenticated,isAdmin],updateProduct)
 
 module.exports = router
