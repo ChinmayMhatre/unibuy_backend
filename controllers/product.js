@@ -170,3 +170,23 @@ exports.loadphoto = async (req,res,next)=>{
     }
     next()
 }
+
+exports.updateInventory = async (req,res,next)=>{
+    let Operations = req.body.order.products.map((product)=>{
+        return {
+            updateOne:{
+                filter:{_id:product._id},
+                update:{$inc:{stock:-product.count,sold:+product.count}}
+            }
+        }
+    })
+    try {
+        const prod = await Product.bulkWrite(Operations,{})
+    } catch (error) {
+        return res.status(400).json({
+            success:false,
+            error:"bulk operation failed"
+        })
+    }
+    next()
+}
