@@ -162,6 +162,23 @@ exports.getAllProducts = async (req,res)=>{
     }
 }
 
+exports.getAllUniqueCategories = async (req,res) =>{
+    
+    try {
+        const categories = await Product.distinct("category",{})
+        return res.status("200").json({
+            success:true,
+            data:categories
+        })
+    } catch (error) {
+        return res.status(400).json({
+                success:false,
+                error:"No category found"
+            })
+    }
+}
+
+
 //* middleware
 exports.loadphoto = async (req,res,next)=>{
     if(req.product.photo.data){
