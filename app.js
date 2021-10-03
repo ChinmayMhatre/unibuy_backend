@@ -9,6 +9,7 @@ const authRoutes            = require('./routes/auth')
 const userRoutes            = require('./routes/user')
 const categoryRoutes        = require('./routes/category')
 const productRoutes        = require('./routes/product')
+const orderRoutes        = require('./routes/order')
 
 const app               = express()
 
@@ -26,6 +27,7 @@ app.use('/api',authRoutes)
 app.use('/api/user',userRoutes)
 app.use('/api/category',categoryRoutes)
 app.use('/api/product',productRoutes)
+app.use('/api/order',orderRoutes)
 
 //* server start
 app.listen(process.env.PORT,()=>{
